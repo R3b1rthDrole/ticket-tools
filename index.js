@@ -33,12 +33,21 @@ client.on('message', message => {
     };
     if(message.content.toLowerCase() === '?sendmsg') {
         message.delete();
+        if (message.member.hasPermission("ADMINISTRATOR")) {
         const embed = new discord.RichEmbed()
         .setAuthor(client.user.username, client.user.displayAvatarURL)
         .setDescription('Pour créer ta candidature, réagis avec 📩 !')
         .setColor('#0091ff')
         .setFooter('Support Poulet Braiser - By Vulkane#1548')
         message.channel.send(embed);
+        } else if (!message.member.hasPermission("ADMINISTRATOR")) {
+            message.reply("Tu n'as pas la permission d'utiliser cette commande.")
+            .then(msg =>  {
+                setTimeout(() => {
+                    message.delete(msg);
+                }, 5000);
+            })
+        }
     }
     if(message.content.toLowerCase() === '?createticket' && message.channel.id === '685230485965635616') {
         message.delete();
