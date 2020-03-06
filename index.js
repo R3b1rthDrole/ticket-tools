@@ -156,7 +156,9 @@ client.on('messageReactionAdd', (reaction, user) =>{
         }
     }
     else if(reaction.emoji.name === '🔒' && reaction.me) {
-        reaction.remove(user);
+        if (user != discord.client){
+            reaction.remove(user);
+        };
         if(userTickets.has(user.id)) {
             if(reaction.message.channel.id === userTickets.get(user.id)) {
                 let embed = new discord.RichEmbed()
