@@ -8,7 +8,14 @@ var userTickets = new Map();
 client.login(process.env.TOKEN);
 
 client.on('ready', () => {
-    console.log(client.user.username + " est en ligne.");
+console.log('Bot => Heberge ' + `${client.users.size}` + ' joueurs, dans ' + `${client.channels.size}` + ' salons de ' + `${client.guilds.size}` + ' serveurs.');
+    client.user.setStatus('online')
+    client.user.setPresence({
+        game: {
+            name: 'Ticket Support - Poulet Braiser',
+            type: "WATCHING"
+        }
+    });
 });
 
 client.on('message', message => {
