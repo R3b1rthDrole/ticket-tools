@@ -77,7 +77,6 @@ client.on('message', message => {
                 .catch(err => console.log(err));
             }
         }
-
         if(message.guild.channels.some(channel => channel.name.toLowerCase() === message.author.username + '-ticket')) {
             message.guild.channels.forEach(channel => {
                 if(channel.name.toLowerCase() === message.author.username + '-ticket') {
@@ -94,7 +93,7 @@ client.on('raw', payload => {
         if(payload.d.emoji.name != '📩'){
             return;
         }
-        if(payload.d.message_id === '685301428004061207'){
+        if(payload.d.message_id !== '685301428004061207'){
             let channel = client.channels.get(payload.d.channel_id)
             if (channel.messages.has(payload.d.message_id)) {
                 return;
@@ -115,9 +114,10 @@ client.on('raw', payload => {
 client.on('messageReactionAdd', (reaction, user) =>{
 
     if(reaction.emoji.name === '📩'){
-        if (user != discord.client){
+        if (user.id !== client.user.id){
             reaction.remove(user);
         };
+        let guild = reaction.message.guild;
         if(userTickets.has(user.id) || reaction.message.guild.channels.some(channel => channel.name.toLowerCase() === user.username + '-ticket')) {
             user.send("Tu possèdes déjà un ticket!");
             console.log(user.username + " a essayé de créer un deuxième ticket.")
@@ -144,7 +144,7 @@ client.on('messageReactionAdd', (reaction, user) =>{
                 ]
             }).then(ch => {
                 userTickets.set(user.id, ch.id);
-                ch.send("|| <@"+user.id+"> ||")
+                ch.send("|| <@"+user.id+"> || ")
                 let embed = new discord.RichEmbed()
                 .setTitle('Ticket de support')
                 .setDescription('Merci d\'avoir créé un ticket, nous lirons ta candidature dès que possible et nous te répondrons dans les plus bref délais !\nRéagis avec 🔒 pour fermer ce ticket.')
@@ -156,9 +156,6 @@ client.on('messageReactionAdd', (reaction, user) =>{
         }
     }
     else if(reaction.emoji.name === '🔒' && reaction.me) {
-        if (user === reaction.me){
-            reaction.remove(user);
-        };
         if(userTickets.has(user.id)) {
             if(reaction.message.channel.id === userTickets.get(user.id)) {
                 let embed = new discord.RichEmbed()
