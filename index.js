@@ -5,7 +5,7 @@ const config = require('./config.json');
 
 var userTickets = new Map();
 
-client.login(config.token);
+client.login(process.env.TOKEN);
 
 client.on('ready', () => {
     console.log(client.user.username + " est en ligne.");
