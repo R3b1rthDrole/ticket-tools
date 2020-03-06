@@ -44,7 +44,7 @@ client.on('message', message => {
             message.reply("Tu n'as pas la permission d'utiliser cette commande.")
             .then(msg =>  {
                 setTimeout(() => {
-                    message.delete(msg);
+                    msg.delete();
                 }, 5000);
             })
         }
