@@ -115,10 +115,8 @@ client.on('messageReactionAdd', (reaction, user) =>{
 
     if(reaction.emoji.name === '📩'){
         if (user.id === client.user.id){
-            console.log(user.id === client.user.id);
             return;
         } else{
-        console.log(user.id === client.user.id);
         reaction.remove(user);
         }
         let guild = reaction.message.guild;
