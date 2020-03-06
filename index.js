@@ -114,9 +114,7 @@ client.on('raw', payload => {
 client.on('messageReactionAdd', (reaction, user) =>{
 
     if(reaction.emoji.name === '📩'){
-        if (user.id !== client.user.id){
-            reaction.remove(user);
-        };
+        console.log(user.id === client.user.id);
         let guild = reaction.message.guild;
         if(userTickets.has(user.id) || reaction.message.guild.channels.some(channel => channel.name.toLowerCase() === user.username + '-ticket')) {
             user.send("Tu possèdes déjà un ticket!");
