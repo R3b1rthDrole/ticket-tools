@@ -156,7 +156,7 @@ client.on('messageReactionAdd', (reaction, user) =>{
         }
     }
     else if(reaction.emoji.name === '🔒' && reaction.me) {
-        if (user != discord.client){
+        if (user === reaction.me){
             reaction.remove(user);
         };
         if(userTickets.has(user.id)) {
